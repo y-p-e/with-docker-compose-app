@@ -20,7 +20,6 @@ jobs:
       - name: Build and Publish to Github Container Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          args: ls -l .
           name: y-p-e/DonutsSite/donuts-site-image
           registry: ghcr.io
           username: ${{ github.actor }}
