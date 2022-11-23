@@ -1,11 +1,14 @@
 name: workflow_dispatch sample 1
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       name:
-        description: 'Name'
+        description: 'Log level'
         required: true
+        default: 'warning'
 
 jobs:
   printLog:
