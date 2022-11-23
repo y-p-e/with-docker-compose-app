@@ -19,8 +19,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build and Publish to Github Container Registry
         uses: elgohr/Publish-Docker-Github-Action@master
-        run: ls -al
         with:
+          args: ls -l .
           name: y-p-e/DonutsSite/donuts-site-image
           registry: ghcr.io
           username: ${{ github.actor }}
