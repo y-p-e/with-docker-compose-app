@@ -11,13 +11,22 @@ on:
         default: 'warning'
 
 jobs:
-  node-docker:
+  checkout_test:
+    name: Compile
     runs-on: ubuntu-latest
-    container:
-      image: node:13.5.0-alpine3.10
-
+    strategy:
+      matrix:
+        emacs_version:
+          - 24.5
+          - 25.3
+          - 26.3
+          - 27.2
     steps:
-      - name: Log node version
-        run: |
-          node -v
-          cat /etc/os-release
+      - name: '[dep] Install Emacs'
+        uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      - name: '[tc] Checkout tc repository'
+        uses: actions/checkout@v2
+      - name: '[tc] Byte compilation tests'
+        run: emacs --batch -L . -f batch-byte-compile tc-pre.el tc.el *-*.el eelll.el
