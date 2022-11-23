@@ -25,5 +25,5 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          dockerfile: prod.Dockerfile
+          dockerfile: next-app/prod.Dockerfile
           tags: latest
