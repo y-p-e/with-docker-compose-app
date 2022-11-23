@@ -11,10 +11,18 @@ on:
         default: 'warning'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    container: node:14
+    container: node:16
     steps:
-      - uses: actions/checkout@v2
-      - name: Build and Publish to Github Packages Registry
-        run: echo "Hello!"
+      # チェックアウト
+      - uses: actions/checkout@v3
+      - name: Build and Publish to Github Container Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: y-p-e/DonutsSite/donuts-site-image
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: prod.Dockerfile
+          tags: latest
