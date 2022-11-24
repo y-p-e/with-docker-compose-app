@@ -26,3 +26,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: next-app/prod.Dockerfile
           tags: latest
+      - uses: actions/checkout@v2
+      - name: Install SSH Key for Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SK }}
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          port: ${{secrets.SSH_PORT}}
+          script: |
+            cd /home/ubuntu
+            git pull origin main
