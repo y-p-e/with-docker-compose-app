@@ -28,10 +28,19 @@ jobs:
           tags: latest
       - name: Install SSH Key for Deploy
         uses: appleboy/ssh-action@master
+        env:
+          GITHUB_USERNAME: ${{ secrets.USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           key: ${{ secrets.SK }}
           host: ${{secrets.SSH_HOST}}
           username: ${{secrets.SSH_USERNAME}}
           port: ${{secrets.SSH_PORT}}
+          envs: GITHUB_USERNAME, GITHUB_TOKEN
           script: |
-            echo pwd
+            docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+            docker image pull ghcr.io/<GitHubのユーザ名>/DonutsSite/donuts-site-image:latest
+            docker container stop nextjs-site
+            docker container rm nextjs-site
+            docker system prune -f
+            docker container run --name nextjs-site -dit -p 3000:3000 ghcr.io/y-p-e/nextjssite/nextjs-site-image:latest
