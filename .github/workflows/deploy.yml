@@ -18,7 +18,7 @@ jobs:
       # チェックアウト
       - uses: actions/checkout@v3
       - name: Build and Publish to Github Container Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: y-p-e/NextjsSite/nextjs-site-image
           registry: ghcr.io
